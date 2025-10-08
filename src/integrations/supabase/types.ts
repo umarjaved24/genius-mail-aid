@@ -14,7 +14,162 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      drafts: {
+        Row: {
+          account_id: string
+          body: string
+          created_at: string | null
+          generated_by_ai: boolean | null
+          id: string
+          subject: string | null
+          to_email: string
+        }
+        Insert: {
+          account_id: string
+          body: string
+          created_at?: string | null
+          generated_by_ai?: boolean | null
+          id?: string
+          subject?: string | null
+          to_email: string
+        }
+        Update: {
+          account_id?: string
+          body?: string
+          created_at?: string | null
+          generated_by_ai?: boolean | null
+          id?: string
+          subject?: string | null
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drafts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "email_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_accounts: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          provider: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          provider?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          provider?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_accounts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      emails: {
+        Row: {
+          account_id: string
+          body: string | null
+          category: string | null
+          created_at: string | null
+          from_email: string
+          from_name: string | null
+          gmail_id: string
+          has_attachments: boolean | null
+          id: string
+          is_read: boolean | null
+          is_starred: boolean | null
+          labels: string[] | null
+          received_at: string
+          snippet: string | null
+          subject: string | null
+          thread_id: string
+        }
+        Insert: {
+          account_id: string
+          body?: string | null
+          category?: string | null
+          created_at?: string | null
+          from_email: string
+          from_name?: string | null
+          gmail_id: string
+          has_attachments?: boolean | null
+          id?: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          labels?: string[] | null
+          received_at: string
+          snippet?: string | null
+          subject?: string | null
+          thread_id: string
+        }
+        Update: {
+          account_id?: string
+          body?: string | null
+          category?: string | null
+          created_at?: string | null
+          from_email?: string
+          from_name?: string | null
+          gmail_id?: string
+          has_attachments?: boolean | null
+          id?: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          labels?: string[] | null
+          received_at?: string
+          snippet?: string | null
+          subject?: string | null
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emails_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "email_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          gmail_token: Json | null
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          gmail_token?: Json | null
+          id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          gmail_token?: Json | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

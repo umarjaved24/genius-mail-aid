@@ -15,7 +15,7 @@ export function useEmails() {
 
   const fetchEmails = async () => {
     try {
-      const { data: accountData } = await supabase
+      const { data: accountData } = await (supabase as any)
         .from("email_accounts")
         .select("id")
         .single();
@@ -25,7 +25,7 @@ export function useEmails() {
         return;
       }
 
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("emails")
         .select("*")
         .eq("account_id", accountData.id)
@@ -35,7 +35,7 @@ export function useEmails() {
 
       if (data) {
         setEmails(
-          data.map((email) => ({
+          data.map((email: any) => ({
             id: email.id,
             from: {
               name: email.from_name || email.from_email,
@@ -98,7 +98,7 @@ export function useEmails() {
     );
 
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("emails")
         .update({ is_starred: !email.isStarred })
         .eq("id", emailId);
@@ -121,7 +121,7 @@ export function useEmails() {
 
   const markAsRead = async (emailId: string) => {
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("emails")
         .update({ is_read: true })
         .eq("id", emailId);
